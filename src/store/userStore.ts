@@ -36,6 +36,21 @@ interface UserPreferences {
   subscription?: Subscription;
 }
 
+const defaultProfile: UserProfile = {
+  displayName: '',
+  email: '',
+  timezone: '(GMT-08:00) Pacific Time'
+};
+
+const initialState: UserPreferences = {
+  contentType: [],
+  keywords: [],
+  competitors: [],
+  onboardingCompleted: false,
+  profile: defaultProfile,
+  subscription: undefined
+};
+
 interface UserStore {
   preferences: UserPreferences;
   setPreferences: (preferences: Partial<UserPreferences>) => void;
@@ -43,24 +58,13 @@ interface UserStore {
   removeCompetitor: (competitorId: string) => void;
   updateProfile: (profile: Partial<UserProfile>) => void;
   updateSubscription: (subscription: Subscription | undefined) => void;
+  resetStore: () => void;
 }
-
-const defaultProfile: UserProfile = {
-  displayName: 'John Doe',
-  email: 'john@example.com',
-  timezone: '(GMT-08:00) Pacific Time'
-};
 
 export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
-      preferences: {
-        contentType: [],
-        keywords: [],
-        competitors: [],
-        onboardingCompleted: false,
-        profile: defaultProfile,
-      },
+      preferences: initialState,
       setPreferences: (newPreferences) =>
         set((state) => ({
           preferences: { ...state.preferences, ...newPreferences },
@@ -92,6 +96,7 @@ export const useUserStore = create<UserStore>()(
             subscription,
           },
         })),
+      resetStore: () => set({ preferences: initialState }),
     }),
     {
       name: 'user-preferences',

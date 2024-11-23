@@ -77,12 +77,6 @@ export function BillingHistory({ payments }: BillingHistoryProps) {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {productName}
                 </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button className="text-indigo-600 hover:text-indigo-900 flex items-center">
-                    <Download className="w-4 h-4 mr-1" />
-                    Invoice
-                  </button>
-                </td> */}
               </tr>
             );
           })}
